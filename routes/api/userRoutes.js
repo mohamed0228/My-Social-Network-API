@@ -5,7 +5,9 @@ const { get } = require('express/lib/response');
 const { 
     getAllUsers,
     createUser,
-    getUserById
+    getUserById,
+   updateUserById,
+   deleteUserById
 } = require('../../controllers/user-controller');
 
 
@@ -17,6 +19,8 @@ router
 router
 .route('/:id')
 .get(getUserById)
+.put(updateUserById)
+.delete(deleteUserById)
 
 
 
