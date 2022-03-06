@@ -4,7 +4,7 @@ const dateFormat = require('../utils/dateFormat');
  ///////////////////////////////////
  const ReactionSchema = new Schema(
   {
-    // set custom id to avoid confusion with parent comment _id
+   
     reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId()
@@ -51,7 +51,7 @@ const ThoughtSchema = new Schema(
         
       },
       
-      reaction: [ReactionSchema]
+      reactions: [ReactionSchema]
     },
     {
       toJSON: {
@@ -61,7 +61,11 @@ const ThoughtSchema = new Schema(
       id: false
     }
   );
-
+  ThoughtSchema.virtual("reactionCount").get(function () {
+    return this.reactions.length;
+  });
  
   
   
+ const Thought = model('Thought', ThoughtSchema);
+ module.exports = Thought;

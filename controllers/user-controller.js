@@ -4,10 +4,15 @@ const { User } = require('../models')
 const userController = {
     getAllUsers(req, res) {
         User.find({})
-            // .populate({
-            //     path: 'thought',
-            //     select: '-__v'
-            //   })
+            .populate({
+                path: 'thoughts',
+                select: '-__v'
+              })
+              .populate({
+                  path: 'friends', 
+                  select: '-__v'
+                })
+                .sort({ _id: -1 })
             .select('-__v')
             //   //.sort({ _id: -1 })
             .then(dbUserData => res.json(dbUserData))
@@ -28,10 +33,10 @@ const userController = {
     //GET a single user by its _id and populated thought and friend data
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
-            // .populate({
-            //     path: 'comments',
-            //     select: '-__v'
-            //   })
+            .populate({
+                path: 'thoughts',
+                select: '-__v'
+              })
              .select('-__v')
             .then(userData => {
                 if (!userData) {
@@ -76,9 +81,43 @@ const userController = {
                 console.log(err);
                 response.status(400).json(err);
             });
-    }
-
-
-
+    },
+    /////////////////////////////
+//////////////////////////////////////////
+//addfreind 
+addFriend({params}, res) {
+    User.findOneAndUpdate(
+        {_id: params.id}, 
+        {$push: { friends: params.friendId}},
+         {new: true})
+   
+    .select('-__v')
+    .then(userData => {
+        if (!userData) {
+            res.status(404).json({message: 'No User with this particular ID!'});
+            return;
+        }
+    res.json(userData);
+    })
+    .catch((err) => res.status(400).json(err));
+} ,
+//delete friend by id
+deleteFriend({params}, res) {
+    User.findOneAndUpdate(
+        {_id: params.id}, 
+        {$pull: { friends: params.friendId}},
+        {new: true}
+        )
+    
+    .select('-__v')
+    .then(userData => {
+        if (!userData) {
+            res.status(404).json({message: 'No User with this particular ID!'});
+            return;
+        }
+    res.json(userData);
+    })
+    .catch((err) => res.status(400).json(err));
+} 
 }
 module.exports = userController;
