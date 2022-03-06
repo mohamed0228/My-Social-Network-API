@@ -20,23 +20,15 @@
 
   ### Technologies Used
 
- Tools and languages used
-MongoDB
-Mongoose
-Express
-Node
-Nodemon
-Installation and Setup
-Clone this repo to your machine
-Install MongoDB here
-Install Node here
-Install Nodemon here
-Install Mongoose here
-Install Express here
-Usage
-To start the application once everything is installed you can run nodemon server.js to start the process and create your network
-Demo of app
-You can view a walkthrough video of the app here
+ 
+#MongoDB
+#mongoose
+#Express
+#Node
+
+
+
+## You can view a walkthrough video of the app here
  # walkthrough video link :
  https://drive.google.com/file/d/1RjyDrZCitoEl48cuRG4jgUbTa7aIg_l0/view
  
